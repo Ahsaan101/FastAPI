@@ -8,23 +8,23 @@ def load_data():
         data = json.load(f)
     return data
 
-# Basic route to check if the API is working
+# Basic endpoint to check if the API is working
 @app.get("/")
 def hello():
     return {"message": "Welcome to Patient Management API"}
 
-# Route to provide information about the API
+# Endpoint to provide information about the API
 @app.get("/about")
 def about():
     return {"message": "A fully functional API to manage patient information."}
 
-# Route to view all patient data
+# Endpoint to view all patient data
 @app.get("/view_all")
 def view_all():
     data = load_data()
     return data
 
-# Route to view a specific patient's data by their PatientID
+# Endpoint to view a specific patient's data by their PatientID
 @app.get("/view_patient/{patient_id}")
 def view_patient(patient_id: str = Path(..., description = "ID of the patient to view", example = "P001")):
     data = load_data()
@@ -33,7 +33,7 @@ def view_patient(patient_id: str = Path(..., description = "ID of the patient to
     else:
         raise HTTPException(status_code=404, detail="Patient not found")
 
-# Route to sort patients based on height, weight, or BMI and order (ascending or descending)
+# Endpoint to sort patients based on height, weight, or BMI and order (ascending or descending)
 @app.get("/sort")
 def sort_patients(sort_by: str = Query(..., description='Sort on the basis of height, weight or bmi'), order: str = Query('asc', description='sort in asc or desc order')):
     valid_fields = ['height', 'weight', 'bmi']
