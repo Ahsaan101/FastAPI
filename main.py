@@ -36,12 +36,13 @@ def view_patient(patient_id: str = Path(..., description = "ID of the patient to
 # Endpoint to sort patients based on height, weight, or BMI and order (ascending or descending)
 @app.get("/sort")
 def sort_patients(sort_by: str = Query(..., description='Sort on the basis of height, weight or bmi'), order: str = Query('asc', description='sort in asc or desc order')):
-    valid_fields = ['height', 'weight', 'bmi']
+    fields = ['height', 'weight', 'bmi']
+    orders = ['asc', 'desc']
 
-    if sort_by not in valid_fields:
-        raise HTTPException(status_code=400, detail=f"Invalid sort_by field. Must be one of {valid_fields}")
-    if order not in ['asc', 'desc']:
-        raise HTTPException(status_code=400, detail="Invalid order. Must be 'asc' or 'desc'")
+    if sort_by not in fields:
+        raise HTTPException(status_code=400, detail=f"Invalid sort_by field. Must be one of {fields}")
+    if order not in orders:
+        raise HTTPException(status_code=400, detail=f"Invalid order. Must be one of {orders}")
     
     data = load_data()
     sorted_data = sorted(data.values(), key=lambda x: x[sort_by], reverse=(order=='desc'))
