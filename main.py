@@ -39,6 +39,8 @@ def sort_patients(sort_by: str = Query(..., description='Sort on the basis of he
     fields = ['height', 'weight', 'bmi']
     orders = ['asc', 'desc']
 
+    sort_by = sort_by.lower()
+    order = order.lower()
     if sort_by not in fields:
         raise HTTPException(status_code=400, detail=f"Invalid sort_by field. Must be one of {fields}")
     if order not in orders:
