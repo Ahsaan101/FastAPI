@@ -99,8 +99,8 @@ def create_patient(patient: Patient):
         raise HTTPException(status_code=400, detail="Patient with this ID already exists")
     
     # to convert Pydantic model to dictionary
-    data[patient.id] = patient.model_dump(exclude=['id'])
-    
+    patient_dict = patient.model_dump(exclude=['id'])
+    data[patient.id] = patient_dict
 
     #Save updated data
     save_data(data)
